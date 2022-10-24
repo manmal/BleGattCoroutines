@@ -285,6 +285,7 @@ constructor(
         override fun onConnectionStateChange(gatt: BG, status: Int, newState: Int) {
             when (status) {
                 STATUS_SUCCESS -> isConnected = newState == BluetoothProfile.STATE_CONNECTED
+                8 -> isConnected = false // Timeout that also occurs when GATT server dies
             }
             stateChangesMutableFlow.tryEmit(
                 GattConnection.StateChange(status = status, newState = newState)
